@@ -1,0 +1,17 @@
+secrets.yaml
+ssl_info.txt
+harmony*.conf
+tts
+.*
+.DS_Store
+*.log
+*.log.*
+*.gz
+*.jpg
+*.png
+*.pyc
+!.gitignore
+webostv.conf
+blueprints
+known_devices.yaml
+www/backgrounds

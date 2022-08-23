@@ -1,0 +1,78 @@
+switch.granen:
+  icon: mdi:pine-tree
+switch.istappar:
+  icon: mdi:string-lights
+switch.takfot:
+  icon: mdi:string-lights
+light.garageport:
+  icon: mdi:wall-sconce
+light.garagefonster:
+  icon: mdi:car-parking-lights
+light.material:
+  icon: mdi:lamp
+light.skrivare:
+  icon: mdi:lamp
+light.atervinning:
+  icon: mdi:lamp
+light.sexan:
+  icon: mdi:numeric-6-circle-outline
+light.sanggavel:
+  icon: mdi:wall-sconce-flat
+light.ormen:
+  icon: mdi:mushroom
+light.julorm:
+  icon: mdi:mushroom
+switch.juleljus:
+  icon: mdi:mushroom
+switch.altanjul:
+  icon: mdi:mushroom
+switch.entreljus:
+  icon: mdi:wall-sconce
+light.sovrumsgang:
+  icon: mdi:wall-sconce
+light.entrebuske:
+  icon: mdi:spotlight-beam
+light.altanbonsai:
+  icon: mdi:spotlight-beam
+light.altanfontan:
+  icon: mdi:spotlight-beam
+light.plantljus:
+  icon: mdi:flower
+light.garageplanta:
+  icon: mdi:flower
+switch.bioduk:
+  icon: mdi:projector-screen-outline
+switch.speltv:
+  icon: mdi:monitor
+light.skarm:
+  icon: mdi:monitor
+light.entrefonster:
+  icon: mdi:lamp
+light.koksfonster:
+  icon: mdi:lamp
+light.badrumsskap:
+  icon: mdi:led-strip-variant
+light.huego:
+  icon: mdi:alarm-light
+light.hallgo:
+  icon: mdi:alarm-light
+switch.ac:
+  icon: mdi:air-conditioner
+light.matbord_upp:
+  icon: mdi:alarm-light
+light.matbord_ned:
+  icon: mdi:wall-sconce-flat
+light.relax:
+  icon: mdi:ceiling-light
+light.hall:
+  icon: mdi:ceiling-light
+light.golvlampa:
+  icon: mdi:floor-lamp
+light.hornlampa:
+  icon: mdi:floor-lamp
+light.bordslampa:
+  icon: mdi:lamp
+light.linas_sang:
+  icon: mdi:wall-sconce
+group.hemma:
+  icon: mdi:security-home

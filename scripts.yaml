@@ -1,0 +1,12 @@
+#Scripts to run
+
+# Spotify Start Playback
+spotify_start:
+  alias: "Spotify: My music"
+  sequence:
+    - service: spotcast.start
+      data:
+        device_name: "{{ states('input_select.speakers') }}"
+        force_playback: true
+  mode: single
+  icon: mdi:spotify
