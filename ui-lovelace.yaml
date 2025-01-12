@@ -1,144 +1,177 @@
 animated_background:
-  default_url: "https://cdn.flixel.com/flixel/ypy8bw9fgw1zv2b4htp2.hd.mp4"
-  included_users:
-    - admin
-  # This entity is just an example, use whatever entity you would like
-  entity: "weather.bäckebolsängen"
+  default_url: https://cdn.flixel.com/flixel/ypy8bw9fgw1zv2b4htp2.hd.mp4
+  entity: weather.valhalla
   state_url:
-    "sunny":
-      - "https://cdn.flixel.com/flixel/hlhff0h8md4ev0kju5be.hd.mp4"
-      - "https://cdn.flixel.com/flixel/zjqsoc6ecqhntpl5vacs.hd.mp4"
-      - "https://cdn.flixel.com/flixel/jvw1avupguhfbo11betq.hd.mp4"
-      - "https://cdn.flixel.com/flixel/8cmeusxf3pkanai43djs.hd.mp4"
-      - "https://cdn.flixel.com/flixel/guwb10mfddctfvwioaex.hd.mp4"
+    sunny:
+      - /local/backgrounds/basketball.mp4
+      - /local/backgrounds/gears_spin01.mp4
+      - /local/backgrounds/man_running_animation.mp4
+    partlycloudy:
+      - /local/backgrounds/basketball.mp4
+      - /local/backgrounds/enc-chest.mp4
+    cloudy:
+      - /local/backgrounds/Birds_Animation.mp4
+      - /local/backgrounds/scifitunnel01.mp4
+      - /local/backgrounds/scifitunnel03.mp4
+    mostlycloudy:
+      - /local/backgrounds/Chain_Animation.mp4
+      - /local/backgrounds/spin_cycle.mp4
+    clear-night:
+      - /local/backgrounds/Count_Animation.mp4
+      - /local/backgrounds/square-spin.mp4
+    fog:
+      - /local/backgrounds/TunnelStreak.mp4
+      - /local/backgrounds/toxic_man_animation.mp4
+    rainy:
+      - /local/backgrounds/abstSpin03.mp4
+      - /local/backgrounds/abstSpin04.mp4
 
-    "partlycloudy":
-      - "https://cdn.flixel.com/flixel/13e0s6coh6ayapvdyqnv.hd.mp4"
-      - "https://cdn.flixel.com/flixel/aorl3skmssy7udwopk22.hd.mp4"
-      - "https://cdn.flixel.com/flixel/qed6wvf2igukiioykg3r.hd.mp4"
-      - "https://cdn.flixel.com/flixel/3rd72eezaj6d23ahlo7y.hd.mp4"
-      - "https://cdn.flixel.com/flixel/9m11gd43m6qn3y93ntzp.hd.mp4"
-      - "https://cdn.flixel.com/flixel/hrkw2m8eofib9sk7t1v2.hd.mp4"
-
-    "cloudy":
-      - "https://cdn.flixel.com/flixel/13e0s6coh6ayapvdyqnv.hd.mp4"
-      - "https://cdn.flixel.com/flixel/aorl3skmssy7udwopk22.hd.mp4"
-      - "https://cdn.flixel.com/flixel/qed6wvf2igukiioykg3r.hd.mp4"
-      - "https://cdn.flixel.com/flixel/3rd72eezaj6d23ahlo7y.hd.mp4"
-      - "https://cdn.flixel.com/flixel/9m11gd43m6qn3y93ntzp.hd.mp4"
-      - "https://cdn.flixel.com/flixel/hrkw2m8eofib9sk7t1v2.hd.mp4"
-
-    "mostlycloudy":
-      - "https://cdn.flixel.com/flixel/e95h5cqyvhnrk4ytqt4q.hd.mp4"
-      - "https://cdn.flixel.com/flixel/l2bjw34wnusyf5q2qq3p.hd.mp4"
-      - "https://cdn.flixel.com/flixel/rrgta099ulami3zb9fd2.hd.mp4"
-
-    "clear-night":
-      - "https://cdn.flixel.com/flixel/x9dr8caygivq5secll7i.hd.mp4"
-      - "https://cdn.flixel.com/flixel/v26zyfd6yf0r33s46vpe.hd.mp4"
-      - "https://cdn.flixel.com/flixel/ypy8bw9fgw1zv2b4htp2.hd.mp4"
-      - "https://cdn.flixel.com/flixel/rosz2gi676xhkiw1ut6i.hd.mp4"
-
-    "fog":
-      - "https://cdn.flixel.com/flixel/vwqzlk4turo2449be9uf.hd.mp4"
-      - "https://cdn.flixel.com/flixel/5363uhabodwwrzgnq6vx.hd.mp4"
-
-    "rainy": "https://cdn.flixel.com/flixel/f0w23bd0enxur5ff0bxz.hd.mp4"
-
-title: Bäckebolsängen
+title: Sunny's HA
 views:
-  - path: My home dashboard
+  - theme: Caule Black Coral Glass
+    path: default_view
     title: Home
+    badges: []
     cards:
-      - type: custom:mini-media-player
-        entity: media_player.samsung_q60aa_65_tv
-
-      - type: grid
-        square: true
-        columns: 3
+      - type: glance
+        title: Date and Time
+        entities:
+          - entity: sensor.time
+            name: Current Time
+          - entity: sensor.date
+            name: Today's Date
+      - type: vertical-stack
         cards:
-          - type: picture-entity
-            entity: person.admin
-            aspect_ratio: "1"
-            show_name: false
-            image: /api/image/serve/61ea9716d54ed72d1b36245100143fd0/512x512
-          - type: picture-entity
-            entity: person.sunny
-            aspect_ratio: "1"
-            show_name: false
-            image: /api/image/serve/2e7425673ddc753504d9a6a9e3aed9a9/512x512
-
+          - type: weather-forecast
+            entity: weather.valhalla
+            name: Weather in Göteborg
+          - type: glance
+            title: Weather Details
+            entities:
+              - entity: sensor.openweathermap_temperature
+                name: Temperature
+              - entity: sensor.openweathermap_humidity
+                name: Humidity
+              - entity: sensor.openweathermap_wind_speed
+                name: Wind Speed
+              - entity: sensor.openweathermap_pressure
+                name: Pressure
       - type: entities
+        title: Smart Lights
         entities:
-          - light.bedroom
-          - light.entrance
-          - light.hall_sofa
-          - light.hall_tv
-          - light.kitchen_dining
-        title: Light
-
-      - type: entities
-        entities:
-          - sensor.canon_ts3300_series
-          - sensor.canon_ts3300_series_black
-          - sensor.canon_ts3300_series_color
-        title: Sensor
-
-      - type: weather-forecast
-        entity: weather.backebolsangen
-        show_forecast: true
-
-      # Västtrafik timetable
+          - entity: light.master_bedroom
+            name: Bedroom
+          - entity: light.hall1
+            name: Living Room Light1
+          - entity: light.hall2
+            name: Living Room Light2
+          - entity: light.dining
+            name: Kitchen Dining Table
+          - entity: light.entrance
+            name: Entrance
       - type: "custom:vasttrafik-card"
-        title: "Mot Brunnsparken"
+        title: "Västrafik"
         entities:
-          - id: sensor.ekedal_till_brunnsparken
-            delay: 6
-          - sensor.godhemsgatan_till_brunnsparken
-
-      - type: "custom:mushroom-person-card"
-        entity: person.sunny
-        use_entity_picture: true
-        name: Sunny
-        layout: vertical
-        hide_state: false
-      - type: "custom:mushroom-person-card"
-        entity: person.vineeth
-        name: Vineeth
-        use_entity_picture: true
-        layout: vertical
-        hide_state: false
-
-  # Floorplan and my-iphone tab
-  - icon: mdi:home-assistant
-    id: overview
-    title: Overview
-    type: custom:masonry-layout
-    layout:
-      width: 280
+          - sensor.musikvagen_to_goteborg_centralstation
+        municipality: Göteborg
+        sort: true
+      - type: iframe
+        url: >-
+          https://embed.windy.com/embed2.html?lat=57.754459&lon=11.987620&detailLat=57.754459&detailLon=11.987620&width=650&height=450&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=24&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1
+        aspect_ratio: 90%
+      - type: entities
+        title: Speed Test
+        entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_ping
+          - sensor.speedtest_upload
+      - type: entities
+        title: Server Room
+        entities:
+          - entity: light.supergalaxy
+            name: Super Galaxy
+      - type: media-control
+        entity: media_player.spotify_unny
+      - type: media-control
+        entity: media_player.samsung_q60aa_65_tv_2
+        name: Living Room TV
+  - theme: Caule Black Blue
+    title: Live Weather
+    path: live-weather
+    badges: []
     cards:
-      # Floor plan
+      - type: iframe
+        url: https://www.youtube.com/embed/yMSc-qqW3To
+        aspect_ratio: 75%
+        title: Geirangerfjord cruise port, Norway
+      - type: iframe
+        url: https://www.youtube.com/embed/Li3Dvqlo5uE
+        aspect_ratio: 75%
+        title: Deutschland (Germany)
+      - type: iframe
+        url: https://www.youtube.com/embed/6hPWq2IG08M
+        aspect_ratio: 75%
+        title: Port of Helsinki, Finland
+      - type: iframe
+        url: https://www.youtube.com/embed/HpZAez2oYsA
+        aspect_ratio: 75%
+        title: Ponte delle Guglie Venice, Italy
+      - type: iframe
+        url: https://www.youtube.com/embed/NCfMPD5A6hQ
+        aspect_ratio: 75%
+        title: Stockholm, Sweden
+      - type: iframe
+        url: https://www.youtube.com/embed/L0PIbKJaXUQ
+        aspect_ratio: 90%
+        title: Reykjavik, Iceland
+      - type: iframe
+        url: https://www.jungfrau.ch/webcams/top-of-europe-jungfraujoch/#/video
+        aspect_ratio: 75%
+        title: Jungfrau, Switzerland
+      - type: iframe
+        url: https://www.youtube.com/embed/1phWWCgzXgM
+        aspect_ratio: 75%
+        title: Amsterdam, Netherlands
+  - theme: Caule Black Blue
+    title: House-layout
+    path: house-layout
+    badges: []
+    cards:
       - type: picture-elements
-        image: /local/floorplan.png
         elements:
           - type: state-icon
-            entity: light.bedroom
-            tap_action:
-              action: toggle
+            entity: light.entrance
+            icon: mdi:lightbulb
             style:
-              top: 6%
-              left: 51%
-      - type: entities
-
-  # Weather tab
-  - icon: mdi:weather-partly-rainy
-    id: weather
-    title: Weather
-    type: custom:masonry-layout
-    layout:
-      width: 365
-    cards:
-      # windy.com
-      - type: iframe
-        url: !secret windy_url
-        aspect_ratio: 100%
+              top: 70%
+              left: 49%
+          - type: state-icon
+            entity: light.bedroom
+            icon: mdi:lightbulb
+            style:
+              top: 78%
+              left: 70%
+          - type: state-icon
+            entity: light.hall_sofa
+            icon: mdi:lightbulb
+            style:
+              top: 42%
+              left: 70%
+          - type: state-icon
+            entity: light.hall_tv
+            icon: mdi:lightbulb
+            style:
+              top: 59%
+              left: 70%
+          - type: state-icon
+            entity: light.kitchen_dining
+            icon: mdi:lightbulb
+            style:
+              top: 39%
+              left: 49%
+          - type: state-label
+            entity: media_player.emily_speaker
+            style:
+              top: 39%
+              left: 49%
+        image: /local/backgrounds/Layout-1.png

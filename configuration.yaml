@@ -1,22 +1,13 @@
-# Root configuration for home assistant
+# Root configuration for Home Assistant
 # Secrets are defined in the file secrets.yaml
 
 homeassistant:
-  # Name of the location where Home Assistant is running
   name: Bäckebolsängen
-  # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
-  # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 10
-  # metric for Metric, imperial for Imperial
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Stockholm
-  # Customization files
-  customize: !include customize.yaml
-  customize_glob: !include customize_glob.yaml
-  # No login for watch/phone, see https://www.home-assistant.io/docs/authentication/provider
+  allowlist_external_dirs:
+    - /config/www
   auth_providers:
     - type: homeassistant
     - type: trusted_networks
@@ -26,100 +17,69 @@ homeassistant:
         - ::1
       allow_bypass_login: true
 
-hassio:
+zone:
+  - name: Home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 16
+    icon: mdi:home
 
-# Enables the frontend
+# Core integrations
 frontend:
   themes: !include_dir_merge_named themes
 
-# Enables configuration UI
 config:
 
-# Discover some devices automatically
-discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-# Enables support for tracking state changes over time
 history:
 
-# View all events in a logbook
 logbook:
 
-# Enables a map showing the location of tracked devices
-map:
-
-# Track the sun
 sun:
 
-# Support person component
 person:
 
 automation: !include automations.yaml
 
-# System health info support
 system_health:
 
-# WOL for SpelTV
-# wake_on_lan:
-
-# Allow mobile companion apps
-#mobile_app:
-
-samsungtv:
-  - host: 192.168.1.127
+# Devices and integrations
+media_player:
+  - platform: samsungtv
+    host: 192.168.1.126
 
 hacs:
   token: !secret github_personal_access_token
 
-# Track device location with nmap. See secrets.yaml for gpslogger configuration.
-#device_tracker:
-#  - platform: nmap_tracker
-#    hosts:
-#      - 192.168.1.162
-#    home_interval: 5
-#    consider_home: 180
-
-# Example configuration.yaml entry
-#notify:
-
-#   - name: email
-#     platform: sendgrid
-#     api_key: !secret sendgrid_api_key
-#     sender: !secret sender_email_address
-#     recipient: !secret recipient_email_address
-
 mobile_app:
 
-# Lovelace UI
 lovelace:
-  #mode: yaml #If wanted to edit dashboard manually, just comment this section
+  mode: yaml
   resources:
-    # https://github.com/thomasloven/lovelace-auto-entities/
     - url: /local/auto-entities.js
       type: module
-    # https://github.com/bramkragten/weather-card
     - url: /local/weather-card.js
       type: module
-    # https://github.com/thomasloven/lovelace-layout-card
     - url: /local/layout-card.js
       type: module
-    # https://github.com/Villhellm/lovelace-animated-background
     - url: /local/animated-background.js
       type: module
-
     - url: /local/weatherbg-card.js
       type: module
-
-    # - url: /local/mini-media-player-bundle.js
-    #   type: module
-
-    # - url: /local/vasttrafik-card.js
-    #   type: module
-
     - url: /local/card-tools.js
       type: module
+    - url: /local/vasttrafik-card.js
+      type: module
+
+  # Include the Lovelace dashboard configuration from ui-lovelace.yaml
+  dashboards:
+    my-dashboard:
+      mode: yaml
+      title: Sunny's HA
+      icon: mdi:home
+      filename: ui-lovelace.yaml
+      show_in_sidebar: true
 
 tts:
   - platform: google_translate
@@ -127,67 +87,66 @@ tts:
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
-    base_url: http://192.168.1.122:8123
     service_name: google_say
 
+# Sensors
 sensor:
   - platform: vasttrafik
-    key: !secret vasttrafik_key
-    secret: !secret vasttrafik_secret
+    key: !secret vasttrafik_api_key # Store API key in secrets.yaml
+    secret: !secret vasttrafik_api_secret # Store API secret in secrets.yaml
     departures:
-      - from: Akkas Gata, Göteborg
-        heading: Hjalmar Brantingsplatsen, Göteborg
-        name: 18, Akkas Gata to Johanneberg
+      - name: Mot Järntorget
+        from: Musikvägen
+        heading: Järntorget
         lines:
-          - 18
-        delay: 5
-      - from: Akkas Gata, Göteborg
-        heading: Hjalmar Brantingsplatsen, Göteborg
-        name: 19, Akkas Gata to Fredriksdal
-        lines:
-          - 19
-        delay: 5
-      - from: Friedländers Gata, Göteborg
-        heading: Angered Centrum, Göteborg
-        name: 40, Friedländers Gata to Angered Centrum
-        lines:
-          - 40
-        delay: 5
-      - from: Friedländers Gata, Göteborg
-        heading: Hjalmar Brantingsplatsen, Göteborg
-        name: 40, Friedländers Gata to Hjalmar Brantingsplatsen
-        lines:
-          - 40
-        delay: 5
-      - from: Akkas Gata, Göteborg
-        heading: Marklandsgatan, Göteborg
-        name: 45, Akkas Gata to Marklandsgatan
-        lines:
-          - 45
+          - 7
+          - GRÖN
+        delay: 10
 
   - platform: time_date
     display_options:
-      - "time"
-      - "date"
-      - "date_time"
-      - "date_time_utc"
-      - "date_time_iso"
-      - "time_date"
-      - "time_utc"
-      - "beat"
+      - time # Current time (sensor.time)
+      - date # Current date (sensor.date)
 
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_secret
+influxdb:
+  host: 192.168.1.122
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: !secret influx_pass
+  max_retries: 3
+  default_measurement: state
 
-# Raspberrypi surveillance camera
+# Raspberry Pi surveillance camera
 camera:
   - platform: ffmpeg
     name: RasPi4
     input: rtsp://192.168.1.76:8554/unicast
 
-# Allow proxy/reverse-proxy requests from cloudflare add-on to the HA
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 172.30.33.0/24
+
+# Template sensors
+template:
+  - sensor:
+      - name: "Homeserver Uptime"
+        unique_id: "sensor.rpi_monitor_raspberrypi.uptime"
+        icon: mdi:timer-outline
+        state: "{{ state_attr('sensor.rpi_monitor_raspberrypi', 'up_time') }}"
+      - name: "Homeserver Used Ext Space"
+        unique_id: "sensor.rpi_monitor_raspberrypi.mnt-extssd_space_prcnt"
+        icon: mdi:harddisk
+        unit_of_measurement: "%"
+        state: "{{ state_attr('sensor.rpi_monitor_raspberrypi', 'drives')['mnt-extssd'].used_prcnt | float }}"
+      - name: "Homeserver CPU 1min"
+        unique_id: "sensor.rpi_monitor_raspberrypi.cpu_1min"
+        icon: mdi:cpu-32-bit
+        unit_of_measurement: "%"
+        state: "{{ state_attr('sensor.rpi_monitor_raspberrypi', 'cpu').load_1min_prcnt | float }}"
+      - name: "Homeserver Free Memory"
+        unique_id: "sensor.rpi_monitor_raspberrypi.free_memory"
+        icon: mdi:memory
+        unit_of_measurement: "MB"
+        state: "{{ state_attr('sensor.rpi_monitor_raspberrypi', 'memory').free_mb | float }}"
