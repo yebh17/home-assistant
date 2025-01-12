@@ -72,7 +72,16 @@ views:
       - type: "custom:vasttrafik-card"
         title: "Västrafik"
         entities:
-          - sensor.musikvagen_to_goteborg_centralstation
+          - sensor.towards_hjalmar_brantingsplatsen
+          - sensor.towards_lindholmen
+          - sensor.towards_akkas_gata_from_lindholmen
+          - sensor.towards_akkas_gata_from_brunnsparken
+          - sensor.towards_nordstan
+          - sensor.towards_central_station
+          - sensor.towards_backebol_from_akkas_gata
+          - sensor.towards_backebol_from_friedlanders_gata
+          - sensor.towards_akkas_gata_from_backebol
+          - sensor.towards_friedlanders_gata
         municipality: Göteborg
         sort: true
       - type: iframe

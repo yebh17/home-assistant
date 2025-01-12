@@ -92,21 +92,59 @@ tts:
 # Sensors
 sensor:
   - platform: vasttrafik
-    key: !secret vasttrafik_api_key # Store API key in secrets.yaml
-    secret: !secret vasttrafik_api_secret # Store API secret in secrets.yaml
+    key: !secret vasttrafik_api_key
+    secret: !secret vasttrafik_api_secret
     departures:
-      - name: Mot Järntorget
-        from: Musikvägen
-        heading: Järntorget
-        lines:
-          - 7
-          - GRÖN
-        delay: 10
+      # Travel to Hjalmar Brantingsplatsen
+      - name: Towards Hjalmar Brantingsplatsen
+        from: Akkas Gata, Göteborg
+        heading: Hjalmar Brantingsplatsen, Göteborg
+        delay: 8
+      # Travel to Office
+      - name: Towards Lindholmen
+        from: Akkas Gata, Göteborg
+        heading: Lindholmen, Göteborg
+        delay: 8
+      # Travel to Bäckebol Köpcentrum
+      - name: Towards Bäckebol from Akkas Gata
+        from: Akkas Gata, Göteborg
+        heading: Bäckebol Köpcentrum, Göteborg
+        delay: 8
+      - name: Towards Bäckebol from Friedländers Gata
+        from: Friedländers Gata, Göteborg
+        heading: Bäckebol Köpcentrum, Göteborg
+        delay: 4
+      # Travel crossing hisingsbron bridge
+      - name: Towards Nordstan
+        from: Akkas Gata, Göteborg
+        heading: Nordstan, Göteborg
+        delay: 6
+      - name: Towards Central Station
+        from: Akkas Gata, Göteborg
+        heading: Centralstationen, Göteborg
+        delay: 8
+      # Travel To Home
+      - name: Towards Akkas Gata from Lindholmen
+        from: Lindholmen, Göteborg
+        heading: Akkas Gata, Göteborg
+        delay: 8
+      - name: Towards Akkas Gata from Brunnsparken
+        from: Brunnsparken, Göteborg
+        heading: Akkas Gata, Göteborg
+        delay: 8
+      - name: Towards Akkas Gata from Bäckebol
+        from: Bäckebol Köpcentrum, Göteborg
+        heading: Akkas Gata, Göteborg
+        delay: 8
+      - name: Towards Friedländers Gata
+        from: Bäckebol Köpcentrum, Göteborg
+        heading: Friedländers Gata, Göteborg
+        delay: 8
 
   - platform: time_date
     display_options:
-      - time # Current time (sensor.time)
-      - date # Current date (sensor.date)
+      - time
+      - date
 
 influxdb:
   host: 192.168.1.122
